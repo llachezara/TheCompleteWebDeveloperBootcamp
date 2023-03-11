@@ -6,6 +6,17 @@ var started = false, level = 0;
 $(document).keypress(function () {
     if (!started) {
         $("#level-title").text("Level " + level);
+        $("#startButton").hide();
+        nextSequence();
+        started = true;
+
+    }
+});
+
+$("#startButton").click(function () {
+    if (!started) {
+        $("#level-title").text("Level " + level);
+        $("#startButton").hide();
         nextSequence();
         started = true;
 
@@ -13,8 +24,8 @@ $(document).keypress(function () {
 });
 
 function nextSequence() {
-    
-    userClickedPattern=[];
+
+    userClickedPattern = [];
 
     level++;
     $("#level-title").text("Level " + level);
@@ -28,7 +39,7 @@ function nextSequence() {
 
     playSound(randomChosenColor);
 
-   
+
 }
 
 
@@ -38,7 +49,7 @@ $(".btn").click(function () {
 
     playSound(userChosenColour);
     animatePress(userChosenColour);
-    checkAnswer(userClickedPattern.length-1);
+    checkAnswer(userClickedPattern.length - 1);
 })
 
 function playSound(name) {
@@ -56,35 +67,36 @@ function animatePress(currentColor) {
     }, 100);
 }
 
-function checkAnswer(currentLevel){
-    if ( userClickedPattern[currentLevel] == gamePattern[currentLevel]){
-        if (userClickedPattern.length == gamePattern.length){
+function checkAnswer(currentLevel) {
+    if (userClickedPattern[currentLevel] == gamePattern[currentLevel]) {
+        if (userClickedPattern.length == gamePattern.length) {
 
             setTimeout(function () {
-              nextSequence();
+                nextSequence();
             }, 1000);
-    
-          }
-    
-        } else {
-    
-         playSound("wrong");
 
-          $("body").addClass("game-over");
-          setTimeout(function (){
-            $("body").removeClass("game-over");
-          },200);
-
-          $("#level-title").text("Game Over, Press Any Key to Restart");
-          startOver();
         }
-    
+
+    } else {
+
+        playSound("wrong");
+
+        $("body").addClass("game-over");
+        setTimeout(function () {
+            $("body").removeClass("game-over");
+        }, 200);
+
+        $("#level-title").text("Game Over, Press Any Key to Restart or the Start button");
+        $("#startButton").text("Restart");
+        $("#startButton").css('background-color', '#9400D3');
+        $("#startButton").show();
+        startOver();
+    }
+
 }
 
-function startOver(){
- level=0;
- gamePattern=[];
- started=false;
+function startOver() {
+    level = 0;
+    gamePattern = [];
+    started = false;
 }
-   
-
